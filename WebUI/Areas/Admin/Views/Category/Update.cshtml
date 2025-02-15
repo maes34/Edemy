@@ -1,0 +1,28 @@
+﻿@model Category
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.ErrorPanel != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.ErrorPanel
+    </div>
+}
+<a class="btn btn-danger float-end" href="/Admin/Category">Geri</a>
+<h1> "<span class="fw-bold">@Model.Name</span>" Kategori Güncelle</h1>
+
+
+<form method="post" action="/Admin/Category/Update">
+    <input type="hidden" value="@Model.ID" name="ID" />
+    <div class="mb-3">
+        <label class="form-label">Kategori Adı:</label>
+        <input type="text" value="@Model.Name" name="Name" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Açıklama:</label>
+        <input type="text" value="@Model.Description" name="Description" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">Ekle</button>
+</form>

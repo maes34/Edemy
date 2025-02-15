@@ -1,0 +1,25 @@
+﻿@model Category
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.ErrorMessage
+    </div>
+}
+<a class="btn btn-danger float-end" href="/Admin/Category">Geri</a>
+<h1>Kategori Ekle</h1>
+
+<form method="post" action="/Admin/Category/Create">
+    <div class="mb-3">
+        <label class="form-label">Kategori Adı:</label>
+        <input type="text" name="Name" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Açıklama:</label>
+            <input type="text" name="Description" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">Ekle</button>
+</form>

@@ -1,0 +1,55 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.ErrorMessage
+    </div>
+}
+<a class="btn btn-danger float-end" href="/Admin/Product">Geri</a>
+<h3>Ürün Ekle</h3>
+
+<form method="post" action="/Admin/Product/Create">
+    <div class="mb-3">
+        <label class="form-label">Ürün Adı:</label>
+        <input type="text" name="Name" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Fiyat:</label>
+        <input type="text" name="Price" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Stok Adeti:</label>
+        <input type="number" name="Stock" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Kategori:</label>
+        <select class="form-select" name="CategoryId">
+            <option value="" selected>Seçim yapınız...</option>
+            @if (ViewBag.CategoryList != null)
+            {
+                @foreach (var item in ViewBag.CategoryList)
+                {
+                    <option value="@item.ID">@item.Name</option>
+                }
+            }
+            else
+            {
+                <option disabled>Kategori Bulunamadı...</option>
+            }
+
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Açıklama:</label>
+        <textarea type="text" name="Description" class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Ürün Resmi:</label>
+        <input type="file" name="picture" placeholder="Resim Seçiniz" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">Ürün Ekle</button>
+</form>
