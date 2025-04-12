@@ -1,0 +1,47 @@
+﻿@model ShoppingCart
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center">Alışveriş Sepetiniz</h2>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Ürün Adı</th>
+                <th scope="col">Fiyat</th>
+                <th scope="col">Adet</th>
+                <th scope="col">Toplam</th>
+                <th scope="col">İşlem</th>
+            </tr>
+        </thead>
+        <tbody>
+                @foreach (var item in Model.shoppingCartItems)
+                {
+                    <tr>
+                        <td>@item.ProductName</td>
+                        <td>@item.ProductUnitPrice</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Amount</td>
+                        <td>
+                            <a href="/Cart/RemoveToCart/@item.ProductID" class="btn btn-danger">
+                                <i class="fa-classic fa-solid fa-trash fa-fw"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }       
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-between">
+        <h4>Toplam: @Model.TotalAmount</h4>
+        <br />
+        <span class="float-end">
+        <a href="/Home" class="btn btn-primary">Alışverişe Devam Et</a>
+        <a href="/Payment/Payment" class="btn btn-success">Ödeme Yap</a>
+        <a href="/Cart/ClearSession" class="btn btn-danger">Sepeti Temizle</a>
+        </span>
+    </div>
+</div>

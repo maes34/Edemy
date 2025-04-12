@@ -27,9 +27,10 @@
             @foreach (var item in Model)
             {
                 <tr>
+                    @* @Url.Content("/images/" + item.Picture) *@
                     <td>@item.ID</td>
                     <td>
-                        <img style="width:100px; height:50px" src="@Url.Content("/images/" + item.Picture)" alt="Ürün Görseli" />
+                        <img style="width:75px; height:75px" src="~/images/@item.Picture" alt="Ürün Görseli" />
                     </td>
                     <td>@item.Name</td>
                     <td>@item.Price ₺</td>
@@ -41,7 +42,7 @@
                         <a href="/Admin/Product/Update/@item.ID" class="btn btn-warning">Düzenle</a>
                     </td>
                 </tr>
-            }
+            }   
         </tbody>
     </table>
 }

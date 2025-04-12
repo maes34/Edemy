@@ -1,0 +1,26 @@
+﻿@model User
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<form method="post" action="/User/Create">
+    <div class="mb-3">
+        <label class="form-label">Kullanıcı Adı:</label>
+        <input type="text" name="UserName" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Şifre:</label>
+        <input type="password" name="Password" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Şifre:</label>
+        <select class="form-select" name="UserType">
+            <option value="" selected>Kullanıcı Tipi</option>
+            <option value="1">Administrator</option>
+            <option value="2">Normal Kullanıcı</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success">Kaydet</button>
+</form>
+

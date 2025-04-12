@@ -1,10 +1,11 @@
 ﻿using Core.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Model.Entities;
 
 namespace WebUI.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+    [Area("Admin"), Authorize]
     public class CategoryController : Controller
     {
         private readonly ICoreService<Category> _db;
@@ -13,9 +14,14 @@ namespace WebUI.Areas.Admin.Controllers
         {
             _db = dbCoreService;
         }
-        public IActionResult Index()
+        public IActionResult Index(int page = 1, int pageSize = 2)
         {
-            return View(_db.GetAll());
+            ViewBag.TotalPages = (int)Math.Ceiling((double)_db.GetCount() / pageSize);
+            ViewBag.CurrentPage = page;
+
+            var data = _db.GetRecords(page, pageSize);
+
+            return View(data);
         }
         public IActionResult Create()
         {

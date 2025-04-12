@@ -1,10 +1,11 @@
 ﻿using Core.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Model.Entities;
 
 namespace WebUI.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+    [Area("Admin"), Authorize]
     public class ProductController : Controller
     {
         private readonly ICoreService<Product> _db;
@@ -57,18 +58,49 @@ namespace WebUI.Areas.Admin.Controllers
         }
         public IActionResult Update(int id)
         {
+            ViewBag.CategoryList = _cdb.GetAll();
             return View(_db.GetbyId(id));
         }
         [HttpPost]
-        public IActionResult Update(Product p)
+        public IActionResult Update(Product p, IFormFile picture)
         {
-            var result = _db.Update(p);
-            return RedirectToAction("Index");
+            var data = _db.GetbyId(p.ID);
+            ViewBag.CategoryList = _cdb.GetAll();
+            if (data is not null)
+            {
+                if (picture is not null)
+                {
+                    string fileName = picture.FileName;
+                    string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", fileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        picture.CopyTo(stream);
+                    }
+
+                    data.Picture = fileName;
+                    data.Price = p.Price;
+                    data.Stock = p.Stock;
+                    data.Name = p.Name;
+                    data.Description = p.Description;
+                    data.CategoryId = p.CategoryId;
+
+                    return _db.Update(data) ? RedirectToAction("Index") : View();
+                }
+                else
+                {
+                    data.Price = p.Price;
+                    data.Stock = p.Stock;
+                    data.Name = p.Name;
+                    data.Description = p.Description;
+                    data.CategoryId = p.CategoryId;
+
+                    return _db.Update(data) ? RedirectToAction("Index") : View();
+                }
+            }
+            ViewBag.UpdateError = "Güncelleme İşlemi Yapılamadı";
+            return View();
         }
-        public IActionResult Delete(int id)
-        {
-            var result = _db.Delete(_db.GetbyId(id));
-            return RedirectToAction("Index");
-        }
+        public IActionResult Delete(int id) => _db.Delete(_db.GetbyId(id)) ? RedirectToAction("Index") : View();
     }
 }

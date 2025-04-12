@@ -14,7 +14,10 @@ namespace Core.Service
         public bool Delete(T entity);
         public List<T> GetAll();
         public T GetbyId(int id);
-
         public bool Save();
+        public int GetCount();
+        public List<T> GetRecords(int page, int pageSize);
+
+
     }
 }

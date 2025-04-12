@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<Category>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Pages/Shared/_Layout.cshtml";
@@ -6,6 +6,23 @@
 <a class="btn btn-primary float-end" href="/Admin/Home">Admin Anasayfasına Git</a>
 <h3>Anasayfa</h3>
 
+<div class="content">
+    <div class="row">
+@foreach (var item in Model)
+{
+    <div class="col-md-4">
+    <div class="card mb-3" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">@item.Name</h5>
+            <p class="card-text">@item.Description</p>
+            <a href="/Product/List/@item.ID" class="btn btn-success">Eğitimler</a>
+        </div>
+    </div>
+            </div>
+            
+}
+    </div>
+</div>
 
 
 

@@ -1,12 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Core.Service;
+using Microsoft.AspNetCore.Mvc;
+using Model.Entities;
 
 namespace WebUI.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly ICoreService<Category> _db;
+
+        public HomeController(ICoreService<Category> dbCoreService)
         {
-            return View();
+            _db = dbCoreService;
+        }
+        public IActionResult Index()
+        {            
+            return View(_db.GetAll());
         }
     }
 }

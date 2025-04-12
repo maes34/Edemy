@@ -1,4 +1,5 @@
-﻿using Core.Entity;
+﻿using Azure;
+using Core.Entity;
 using Core.Service;
 using Model.Context;
 using System;
@@ -65,5 +66,11 @@ namespace Service.DbService
 
         public bool Save() => _db.SaveChanges() > 0 ? true : false;
 
+        public int GetCount() => GetAll().Count;
+
+        public List<T> GetRecords(int page, int pageSize)
+        {
+          return GetAll().Skip((page -1) * pageSize).Take(pageSize).ToList();
+        }
     }
 }
